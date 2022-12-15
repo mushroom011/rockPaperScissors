@@ -1,11 +1,19 @@
 const OPTIONS = ['rock', 'paper', 'scissors'];
+const POINTS = 5;
 let playerScore = 0;
 let computerScore = 0;
+
 const getComputerChoice = (options) => {
     const randomNumber = Math.floor(Math.random() * 3);
     return options[randomNumber];
 }
+
 const playSingleRound = (playerSelection, computerSelection) => {
+    if((playerScore === POINTS) || (computerScore === POINTS)){
+        const winner = (playerScore > computerScore) ? 'You are' : 'Computer is';
+        return `${winner} the winner!`;
+    }
+
     const lowerCasePlayerSelection = playerSelection.toLowerCase();
     if(computerSelection === lowerCasePlayerSelection) return 'Draw!';
 
@@ -30,15 +38,30 @@ const playSingleRound = (playerSelection, computerSelection) => {
     }
 }
 
-const game = () => {
-    let playerSelection;
-    for (let i = 0; i < 5; i++){
-        playerSelection = prompt('Rock! Paper! Scissors!');
-        console.log(playSingleRound(playerSelection, getComputerChoice(OPTIONS)));
-    }
-
-    const result = (playerScore > computerScore) ? 'Win' : 'Lose';
-    console.log(`You ${result}! Your score is ${playerScore}`);
+const showResult = (result) => {
+    const resultDiv = document.querySelector('#result');
+    resultDiv.textContent = result;
 }
 
-game();
+const showScore = () => {
+    const playerPoints = document.querySelector('#player-points');
+    const computerPoints = document.querySelector('#computer-points');
+    playerPoints.textContent = playerScore;
+    computerPoints.textContent = computerScore;
+}
+
+const buttons = document.querySelectorAll('.buttons .btn');
+buttons.forEach(btn => btn.addEventListener('click', (e) => {
+    showScore();
+    showResult(playSingleRound(e.target.dataset.option, getComputerChoice(OPTIONS)));
+}));
+
+const resetTheGame = () => {
+    playerScore = 0;
+    computerScore = 0;
+    showScore();
+    showResult('');
+}
+
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', resetTheGame);

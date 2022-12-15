@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
 </head>
 <body>
-
+    <div class="buttons">
+        <button class="btn" data-option='rock'>Rock</button>
+        <button class="btn" data-option='paper'>Paper</button>
+        <button class="btn" data-option='scissors'>Scissors</button>
+    </div>
+    <div id="score">
+        Your score: <span id="player-points">0</span> Computer score: <span id="computer-points">0</span>
+    </div>
+    <div id="result"></div>
+    <button id="reset">Reset the game</button>
 </body>
 </html>
