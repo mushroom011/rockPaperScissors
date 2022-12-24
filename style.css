@@ -58,6 +58,10 @@ h1 {
     font-size: 50px;
 }
 
+.hidden {
+    display: none;
+}
+
 .score, .result {
     font-size: 32px;
 }

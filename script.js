@@ -2,6 +2,7 @@ const OPTIONS = ['rock', 'paper', 'scissors'];
 const POINTS = 5;
 let playerScore = 0;
 let computerScore = 0;
+let gameOver = false;
 
 const getComputerChoice = (options) => {
     const randomNumber = Math.floor(Math.random() * 3);
@@ -10,6 +11,8 @@ const getComputerChoice = (options) => {
 
 const playSingleRound = (playerSelection, computerSelection) => {
     if((playerScore === POINTS) || (computerScore === POINTS)){
+        gameOver = true;
+        togglePlayAgainButton();
         const winner = (playerScore > computerScore) ? 'You are' : 'Computer is';
         return `${winner} the winner!`;
     }
@@ -52,6 +55,7 @@ const showScore = () => {
 
 const buttons = document.querySelectorAll('.buttons .btn');
 buttons.forEach(btn => btn.addEventListener('click', (e) => {
+    if(gameOver) return;
     showScore();
     showResult(playSingleRound(e.target.dataset.option, getComputerChoice(OPTIONS)));
 }));
@@ -59,9 +63,15 @@ buttons.forEach(btn => btn.addEventListener('click', (e) => {
 const resetTheGame = () => {
     playerScore = 0;
     computerScore = 0;
+    gameOver = false;
     showScore();
     showResult('');
+    togglePlayAgainButton();
 }
 
-const resetButton = document.querySelector('#reset');
-resetButton.addEventListener('click', resetTheGame);
+const playAgainButton = document.querySelector('#playAgain');
+playAgainButton.addEventListener('click', resetTheGame);
+
+const togglePlayAgainButton = () => {
+    playAgainButton.classList.toggle('hidden');
+}
