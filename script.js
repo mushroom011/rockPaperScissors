@@ -9,12 +9,16 @@ const getComputerChoice = (options) => {
     return options[randomNumber];
 }
 
+const getTheWinner = () => {
+    const winner = (playerScore > computerScore) ? 'You are' : 'Computer is';
+    return `${winner} the winner!`;
+}
+
 const playSingleRound = (playerSelection, computerSelection) => {
     if((playerScore === POINTS) || (computerScore === POINTS)){
         gameOver = true;
         togglePlayAgainButton();
-        const winner = (playerScore > computerScore) ? 'You are' : 'Computer is';
-        return `${winner} the winner!`;
+        return getTheWinner();
     }
 
     const lowerCasePlayerSelection = playerSelection.toLowerCase();
